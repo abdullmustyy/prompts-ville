@@ -2,7 +2,7 @@ import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 
-const metadata = {
+export const metadata = {
   title: "Promptville",
   description: "Discover and Share AI Prompts",
 };
