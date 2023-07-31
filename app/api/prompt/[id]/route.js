@@ -1,5 +1,8 @@
 import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
+import { ObjectId } from "mongodb";
+import { authOptions } from "@app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 export const GET = async (request, { params }) => {
   try {
@@ -40,12 +43,16 @@ export const PATCH = async (request, { params }) => {
 };
 
 export const DELETE = async (request, { params }) => {
+  const session = await getServerSession(authOptions);
+
   try {
     await connectToDB();
 
     // Find the prompt by ID and remove it
     await Prompt.deleteOne({ _id: params.id });
-    const prompts = await Prompt.find({}).populate("creator");
+    const prompts = await Prompt.find({
+      creator: new ObjectId(session?.user.id),
+    }).populate("creator");
 
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
