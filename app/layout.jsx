@@ -1,6 +1,9 @@
+"use client";
+
 import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
+import { usePathname } from "next/navigation";
 
 export const metadata = {
   title: "Promptville",
@@ -8,6 +11,8 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => {
+  const pathName = usePathname();
+
   return (
     <html lang="en">
       <body className="select-none">
@@ -16,7 +21,7 @@ const RootLayout = ({ children }) => {
             <div className="gradient" />
           </div>
           <main className="app">
-            <Nav />
+            {pathName !== "/auth" && <Nav />}
             {children}
           </main>
         </Provider>
