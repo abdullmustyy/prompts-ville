@@ -4,7 +4,7 @@ import Image from "next/image";
 const AuthLayout = ({ children }) => {
   return (
     <section className="">
-      <Link href="/" className="flex gap-2 flex-center absolute left-8 top-8 z-10">
+      <Link href="/" className="flex gap-2 flex-center absolute left-3 top-3 z-10">
         <Image
           src="/assets/images/logo.svg"
           alt="logo"

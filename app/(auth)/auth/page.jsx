@@ -6,9 +6,11 @@ import * as Yup from "yup";
 import { MyTextInput } from "@components/FormItems";
 
 const authSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email address.").required("Required"),
+  email: Yup.string()
+    .email("Invalid email address.")
+    .required("Email field should not be empty."),
   password: Yup.string()
-    .required("No password provided.")
+    .required("Password field should not be empty.")
     .min(8, "Password is too short - should be 8 chars minimum.")
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
