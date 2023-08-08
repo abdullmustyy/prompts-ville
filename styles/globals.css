@@ -8,6 +8,10 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
+hr {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -79,6 +83,10 @@
 
 .black_btn {
   @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+}
+
+.google_btn {
+  @apply rounded-full w-full transition-all text-base font-bold font-inter flex items-center shadow-lg hover:bg-black hover:text-white border-b-2 border-l-2 border-t border-black py-1.5 px-4;
 }
 
 .outline_btn {

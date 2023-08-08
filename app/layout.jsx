@@ -3,7 +3,7 @@ import Provider from "@components/Provider";
 import LayoutProvider from "@components/LayoutProvider";
 
 export const metadata = {
-  title: "Promptville",
+  title: "PromptsVille",
   description: "Discover and Share AI Prompts",
 };
 
