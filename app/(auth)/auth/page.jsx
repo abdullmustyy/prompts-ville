@@ -127,9 +127,9 @@ const Auth = () => {
               </button>
             </Form>
             <div className="flex-center gap-4 w-fit place-self-center">
-              <hr className="w-[15rem] h-[1px] border-none" />
+              <hr className="md:w-[15rem] w-[10rem] h-[1px] border-none" />
               <span className="test-sm font-semibold">or</span>
-              <hr className="w-[15rem] h-[1px] border-none" />
+              <hr className="md:w-[15rem] w-[10rem] h-[1px] border-none" />
             </div>
             <div>
               {providers &&
