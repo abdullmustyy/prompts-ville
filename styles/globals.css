@@ -86,7 +86,7 @@ hr {
 }
 
 .google_btn {
-  @apply rounded-full w-full transition-all text-base font-bold font-inter flex items-center shadow-lg hover:bg-black hover:text-white border-b-2 border-l-2 border-t border-black py-1.5 px-4;
+  @apply rounded-full w-full transition-all text-base font-bold font-inter flex items-center shadow-lg hover:bg-[#111827] hover:text-white border-b-2 border-l-2 border-t border-[#111827] py-1.5 px-4;
 }
 
 .outline_btn {

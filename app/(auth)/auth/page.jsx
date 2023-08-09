@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { getProviders, signIn } from "next-auth/react";
-import { MyTextInput } from "@components/FormItems";
 import Image from "next/image";
+import { getProviders, signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { MyTextInput } from "@components/FormItems";
 
 const signInSchema = Yup.object().shape({
   email: Yup.string()
@@ -54,6 +55,7 @@ const signUpValues = {
 
 const Auth = () => {
   const [providers, setProviders] = useState(null);
+  const [error, setError] = useState(null);
   const [pageType, setPageType] = useState("signin");
   const isSignIn = pageType === "signin";
   const isSignUp = pageType === "signup";
@@ -66,11 +68,50 @@ const Auth = () => {
     setProvidersList();
   }, []);
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const logIn = async () => {};
+
+  const signUp = async (
+    { userName, displayName, email, password },
+    resetForm
+  ) => {
+    try {
+      const useExistRes = await fetch("/api/auth/user-exists", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+
+      const { user } = await useExistRes.json();
+
+      if (user) {
+        setError("User already exist.");
+        return;
+      }
+
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          userName,
+          displayName,
+          email,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        resetForm();
+        setPageType("signin");
+      } else {
+        console.log("Something went wrong.");
+        console.log(response);
+      }
+    } catch (error) {
+      console.log("Error during registeration:", error);
+    }
+  };
+
   const handleSubmit = async (values, { resetForm }) => {
-    await delay(2000);
-    alert(JSON.stringify(values, null, 2));
-    // resetForm();
+    if (isSignIn) logIn(values, resetForm);
+    if (isSignUp) signUp(values, resetForm);
   };
 
   return (
@@ -137,7 +178,10 @@ const Auth = () => {
                   <button
                     type="button"
                     key={provider.name}
-                    onClick={() => signIn(provider.id)}
+                    onClick={() => {
+                      signIn(provider.id);
+                      redirect("/");
+                    }}
                     className="google_btn"
                   >
                     <Image
