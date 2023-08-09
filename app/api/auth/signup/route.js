@@ -1,19 +1,19 @@
 import { connectToDB } from "@utils/database";
 import User from "@models/user";
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export const POST = async (request) => {
   try {
     await connectToDB();
 
-    const { userName, displyName, email, password } = await request.json();
+    const { userName, displayName, email, password } = await request.json();
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     await User.create({
       userName,
-      displyName,
+      displayName,
       email,
       password: hashedPassword,
     });

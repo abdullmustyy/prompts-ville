@@ -7,10 +7,8 @@ export const POST = async (request) => {
     await connectToDB();
 
     const { email } = await request.json();
-    console.log(email);
 
-    const user = User.exists({ email });
-    console.log(user._id);
+    const user = await User.exists({ email });
 
     return NextResponse.json({ user });
   } catch (error) {
