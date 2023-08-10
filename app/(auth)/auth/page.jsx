@@ -56,24 +56,49 @@ const signUpValues = {
 
 const Auth = () => {
   const [providers, setProviders] = useState(null);
+  const [googleProvider, setGoogleProvider] = useState(null);
+  const [credentials, setCredentials] = useState(null);
   const [error, setError] = useState(null);
   const [pageType, setPageType] = useState("signin");
-  const isSignIn = pageType === "signin";
-  const isSignUp = pageType === "signup";
 
   useEffect(() => {
     const setProvidersList = async () => {
       const response = await getProviders();
       setProviders(response);
     };
+
     setProvidersList();
   }, []);
 
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const logIn = async (Value, resetForm) => {
-    await sleep(3000);
-    alert(JSON.stringify(Value, null, 2));
-    // resetForm();
+  useEffect(() => {
+    if (providers) {
+      setGoogleProvider(providers.google);
+      setCredentials(providers.credentials);
+    }
+  }, [providers]);
+
+  const isSignIn = pageType === "signin";
+  const isSignUp = pageType === "signup";
+
+  const logIn = async ({ email, password }, resetForm) => {
+    console.log(email, password);
+    try {
+      const response = await signIn(credentials.id, {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (response.error) {
+        setError("Invalid credentials.");
+        return;
+      }
+
+      resetForm();
+      redirect("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signUp = async (
@@ -192,27 +217,26 @@ const Auth = () => {
               <hr className="md:w-[15rem] w-[10rem] h-[1px] border-none" />
             </div>
             <div>
-              {providers &&
-                Object.values(providers).map((provider) => (
-                  <button
-                    type="button"
-                    key={provider.name}
-                    onClick={() => {
-                      signIn(provider.id);
-                      redirect("/");
-                    }}
-                    className="google_btn"
-                  >
-                    <Image
-                      src="/assets/icons/google.svg"
-                      width={20}
-                      height={20}
-                      alt="Google logo"
-                      className="rounded-full"
-                    />
-                    <span className="mx-auto">Continue with Google</span>
-                  </button>
-                ))}
+              {googleProvider && (
+                <button
+                  type="button"
+                  key={googleProvider.name}
+                  onClick={() => {
+                    signIn(googleProvider.id);
+                    redirect("/");
+                  }}
+                  className="google_btn"
+                >
+                  <Image
+                    src="/assets/icons/google.svg"
+                    width={20}
+                    height={20}
+                    alt="Google logo"
+                    className="rounded-full"
+                  />
+                  <span className="mx-auto">Continue with Google</span>
+                </button>
+              )}
             </div>
             <p
               className="text-base font-semibold cursor-pointer w-fit place-self-center"
