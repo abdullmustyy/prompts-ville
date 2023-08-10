@@ -7,6 +7,7 @@ import Image from "next/image";
 import { getProviders, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { MyTextInput } from "@components/FormItems";
+import { FaCircleExclamation } from "react-icons/fa6";
 
 const signInSchema = Yup.object().shape({
   email: Yup.string()
@@ -35,9 +36,9 @@ const signUpSchema = Yup.object().shape({
     .min(8, "Password is too short - should be 8 chars minimum.")
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
   confirmPassword: Yup.string()
-    .required("Password field is required.")
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+    .label("Confirm password")
+    .required("Confirm your password.")
+    .oneOf([Yup.ref("password")], "Passwords do not match."),
 });
 
 const signInValues = {
@@ -68,12 +69,19 @@ const Auth = () => {
     setProvidersList();
   }, []);
 
-  const logIn = async () => {};
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const logIn = async (Value, resetForm) => {
+    await sleep(3000);
+    alert(JSON.stringify(Value, null, 2));
+    // resetForm();
+  };
 
   const signUp = async (
     { userName, displayName, email, password },
-    resetForm
+    resetForm,
+    setSubmitting
   ) => {
+    setSubmitting(true);
     try {
       const useExistRes = await fetch("/api/auth/user-exists", {
         method: "POST",
@@ -83,7 +91,7 @@ const Auth = () => {
       const { user } = await useExistRes.json();
 
       if (user) {
-        setError("User already exist.");
+        setError("User already exists.");
         return;
       }
 
@@ -98,6 +106,7 @@ const Auth = () => {
       });
 
       if (response.ok) {
+        setSubmitting(false);
         resetForm();
         setPageType("signin");
       } else {
@@ -109,9 +118,10 @@ const Auth = () => {
     }
   };
 
-  const handleSubmit = async (values, { resetForm }) => {
-    if (isSignIn) logIn(values, resetForm);
-    if (isSignUp) signUp(values, resetForm);
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    isSignIn
+      ? await logIn(values, resetForm)
+      : await signUp(values, resetForm, setSubmitting);
   };
 
   return (
@@ -162,10 +172,19 @@ const Auth = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
+                onClick={() => setError(null)}
                 className="px-5 py-1.5 text-base font-bold bg-primary-orange rounded-full text-white disable"
               >
                 {isSubmitting ? "Signing" : "Sign"} {isSignIn ? "In" : "Up"}
               </button>
+              {error && (
+                <div className="text-red-600 flex items-center gap-2">
+                  <FaCircleExclamation />
+                  <h3 className="text-base textcenter text-red-600 font-semibold">
+                    {error}
+                  </h3>
+                </div>
+              )}
             </Form>
             <div className="flex-center gap-4 w-fit place-self-center">
               <hr className="md:w-[15rem] w-[10rem] h-[1px] border-none" />
@@ -199,21 +218,22 @@ const Auth = () => {
               className="text-base font-semibold cursor-pointer w-fit place-self-center"
               onClick={() => {
                 resetForm();
+                setError(null);
                 setPageType(isSignIn ? "signup" : "signin");
               }}
             >
               {isSignIn && (
-                <span>
+                <span className="group">
                   Don&apos;t have an account?{" "}
-                  <span className="orange_gradient font-bold">
+                  <span className="orange_gradient font-bold group-hover:text-primary-orange group-hover:underline underline-offset-2">
                     Sign Up here
                   </span>
                 </span>
               )}
               {isSignUp && (
-                <span>
+                <span className="group">
                   Already have an account?{" "}
-                  <span className="orange_gradient font-bold">
+                  <span className="orange_gradient font-bold group-hover:text-primary-orange group-hover:underline underline-offset-2">
                     Sign In here
                   </span>
                 </span>

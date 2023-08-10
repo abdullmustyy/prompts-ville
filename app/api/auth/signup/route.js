@@ -23,6 +23,7 @@ export const POST = async (request) => {
       { status: 201 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "An error occurred while registering the user." },
       { status: 500 }
