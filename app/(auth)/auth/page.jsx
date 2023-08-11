@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, replace } from "formik";
 import * as Yup from "yup";
 import Image from "next/image";
 import { getProviders, signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MyTextInput } from "@components/FormItems";
 import { FaCircleExclamation } from "react-icons/fa6";
 
@@ -61,6 +61,8 @@ const Auth = () => {
   const [error, setError] = useState(null);
   const [pageType, setPageType] = useState("signin");
 
+  const { replace } = useRouter();
+
   useEffect(() => {
     const setProvidersList = async () => {
       const response = await getProviders();
@@ -81,7 +83,6 @@ const Auth = () => {
   const isSignUp = pageType === "signup";
 
   const logIn = async ({ email, password }, resetForm) => {
-    console.log(email, password);
     try {
       const response = await signIn(credentials.id, {
         email,
@@ -95,7 +96,7 @@ const Auth = () => {
       }
 
       resetForm();
-      redirect("/");
+      replace("/");
     } catch (error) {
       console.log(error);
     }
@@ -223,7 +224,7 @@ const Auth = () => {
                   key={googleProvider.name}
                   onClick={() => {
                     signIn(googleProvider.id);
-                    redirect("/");
+                    replace("/");
                   }}
                   className="google_btn"
                 >
