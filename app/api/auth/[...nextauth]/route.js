@@ -8,7 +8,6 @@ import bcrypt from "bcrypt";
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
       credentials: {},
       async authorize({ email, password }, req) {
@@ -46,32 +45,42 @@ export const authOptions = {
   pages: {
     signIn: "/auth",
   },
-  // callbacks: {
-  //   async session({ session }) {
-  //     const sessionUser = await User.findOne({ email: session.user.email });
-  //     session.user.id = sessionUser._id.toString();
-  //     return session;
-  //   },
-  //   async signIn({ profile }) {
-  //     try {
-  //       await connectToDB();
-  //       //   Check if user already exists
-  //       const userExists = await User.findOne({ email: profile.email });
-  //       //   If not, create a new one
-  //       if (!userExists) {
-  //         await User.create({
-  //           email: profile.email,
-  //           userName: profile.name.replace(" ", "").toLowerCase(),
-  //           image: profile.picture,
-  //         });
-  //       }
-  //       return true;
-  //     } catch (error) {
-  //       console.log(error);
-  //       return false;
-  //     }
-  //   },
-  // },
+  callbacks: {
+    async session({ session }) {
+      const sessionUser = await User.findOne({ email: session.user.email });
+      session.user.id = sessionUser._id.toString();
+      return session;
+    },
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = profile.id;
+      }
+      return token;
+    },
+    async signIn({ profile }) {
+      if (!profile) return;
+      try {
+        await connectToDB();
+        //   Check if user already exists
+        const userExists = await User.findOne({ email: profile.email });
+        //   If not, create a new one
+        if (!userExists) {
+          await User.create({
+            email: profile.email,
+            userName: profile.name.replace(" ", "").toLowerCase(),
+            image: profile.picture,
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

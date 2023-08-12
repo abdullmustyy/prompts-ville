@@ -91,6 +91,7 @@ const AuthForm = () => {
       });
 
       if (response.error) {
+        console.log(error);
         setError("Invalid credentials.");
         return;
       }
@@ -224,7 +225,6 @@ const AuthForm = () => {
                   key={googleProvider.name}
                   onClick={() => {
                     signIn(googleProvider.id);
-                    replace("/");
                   }}
                   className="google_btn"
                 >
