@@ -51,25 +51,20 @@ export const authOptions = {
       session.user.id = sessionUser._id.toString();
       return session;
     },
-    async jwt({ token, account, profile }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token;
-        token.id = profile.id;
-      }
-      return token;
-    },
     async signIn({ profile }) {
-      if (!profile) return;
       try {
         await connectToDB();
         //   Check if user already exists
-        const userExists = await User.findOne({ email: profile.email });
+        const userExists = profile
+          ? await User.findOne({ email: profile.email })
+          : true;
         //   If not, create a new one
         if (!userExists) {
           await User.create({
             email: profile.email,
+            displayName: profile.given_name.toLowerCase(),
             userName: profile.name.replace(" ", "").toLowerCase(),
+            password: profile.family_name.toLowerCase(),
             image: profile.picture,
           });
         }

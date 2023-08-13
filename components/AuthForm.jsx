@@ -91,7 +91,6 @@ const AuthForm = () => {
       });
 
       if (response.error) {
-        console.log(error);
         setError("Invalid credentials.");
         return;
       }
