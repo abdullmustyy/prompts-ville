@@ -52,6 +52,15 @@ export const authOptions = {
       return session;
     },
     async signIn({ profile }) {
+      let password;
+
+      if (profile) {
+        password = profile.family_name.toLowerCase() + "1";
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        profile.password = hashedPassword;
+      }
+
       try {
         await connectToDB();
         //   Check if user already exists
@@ -64,7 +73,7 @@ export const authOptions = {
             email: profile.email,
             displayName: profile.given_name.toLowerCase(),
             userName: profile.name.replace(" ", "").toLowerCase(),
-            password: profile.family_name.toLowerCase(),
+            password: profile.password,
             image: profile.picture,
           });
         }
