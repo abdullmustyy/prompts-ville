@@ -15,17 +15,12 @@ export const authOptions = {
           await connectToDB();
 
           const user = await User.findOne({ email });
-
-          if (!user) {
-            return null;
-          }
-
           const isPasswordCorrect = await bcrypt.compare(
             password,
             user.password
           );
 
-          if (!isPasswordCorrect) {
+          if (!user || !isPasswordCorrect) {
             return null;
           }
 
