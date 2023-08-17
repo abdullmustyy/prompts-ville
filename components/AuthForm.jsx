@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getProviders, signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Image from "next/image";
-import { getProviders, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { MyTextInput } from "@components/FormItems";
 import { FaCircleExclamation } from "react-icons/fa6";
 
@@ -61,6 +61,8 @@ const AuthForm = () => {
   const [error, setError] = useState(null);
   const [pageType, setPageType] = useState("signin");
 
+  const { get } = useSearchParams();
+  const callbackUrl = get("callbackUrl");
   const { replace } = useRouter();
 
   useEffect(() => {
@@ -88,6 +90,7 @@ const AuthForm = () => {
         email,
         password,
         redirect: false,
+        callbackUrl: callbackUrl || "/profile",
       });
 
       if (response.error) {
@@ -96,7 +99,7 @@ const AuthForm = () => {
       }
 
       resetForm();
-      replace("/profile");
+      // replace("/profile");
     } catch (error) {
       console.log(error);
     }
@@ -223,7 +226,9 @@ const AuthForm = () => {
                   type="button"
                   key={googleProvider.name}
                   onClick={() => {
-                    signIn(googleProvider.id);
+                    signIn(googleProvider.id, {
+                      callbackUrl: callbackUrl || "/profile",
+                    });
                   }}
                   className="google_btn"
                 >
