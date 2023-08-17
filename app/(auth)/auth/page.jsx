@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import AuthForm from "@components/AuthForm";
 
 const AuthPage = async ({ searchParams }) => {

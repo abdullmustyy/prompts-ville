@@ -54,8 +54,7 @@ const signUpValues = {
   confirmPassword: "",
 };
 
-const AuthForm = ({ from }) => {
-  console.log("From", from);
+const AuthForm = () => {
   const [providers, setProviders] = useState(null);
   const [googleProvider, setGoogleProvider] = useState(null);
   const [credentials, setCredentials] = useState(null);
@@ -97,7 +96,7 @@ const AuthForm = ({ from }) => {
       }
 
       resetForm();
-      replace(from || "/");
+      replace("/profile");
     } catch (error) {
       console.log(error);
     }
