@@ -99,7 +99,7 @@ const AuthForm = () => {
       }
 
       resetForm();
-      // replace("/profile");
+      replace("response.url");
     } catch (error) {
       console.log(error);
     }

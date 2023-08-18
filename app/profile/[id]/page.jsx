@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Profile from "@components/Profile";
 
@@ -10,10 +10,10 @@ const UserProfile = ({ params }) => {
   const { data: session } = useSession();
   const { replace } = useRouter();
 
-  if (session?.user.id !== params.id) replace("/profile");
+  if (session?.user.id === params.id) replace("/profile");
 
   const [userPost, setUserPost] = useState([]);
-  const userName = useSearchParams().get("name");
+  const userName = userPost[0]?.creator?.userName;
 
   useEffect(() => {
     const fetchPosts = async () => {
