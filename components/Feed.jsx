@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import PromptCard from "./PromptCard";
+import { FaCircleXmark } from "react-icons/fa6";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -41,7 +41,8 @@ const Feed = () => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return allPosts.filter(
       (item) =>
-        regex.test(item.creator.username) ||
+        regex.test(item.creator.displayName) ||
+        regex.test(item.creator.userName) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
     );
@@ -70,13 +71,23 @@ const Feed = () => {
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
-        <input
-          type="text"
-          placeholder="Search for a tag or a username"
-          value={searchText}
-          onChange={handleSearchChange}
-          required
-          className="search_input peer"
+        <div className="w-full relative">
+          <input
+            type="text"
+            placeholder="Search for a tag or a username"
+            value={searchText}
+            onChange={handleSearchChange}
+            required
+            className="search_input peer"
+          />
+        </div>
+        <FaCircleXmark
+          onClick={() => setSearchText("")}
+          className={
+            searchText
+              ? "text-primary-orange absolute end-2 cursor-pointer"
+              : "hidden"
+          }
         />
       </form>
 
