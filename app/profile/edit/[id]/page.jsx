@@ -18,11 +18,7 @@ const editProfileSchema = Yup.object().shape({
 });
 
 const EditProfile = ({ params }) => {
-  const [profile, setProfile] = useState({});
-  const [profileValues, setProfileValues] = useState({
-    displayName: profile.displayName,
-    userName: profile.userName,
-  });
+  const [profileValues, setProfileValues] = useState({});
   const { replace } = useRouter();
 
   useEffect(() => {
@@ -30,7 +26,10 @@ const EditProfile = ({ params }) => {
       const response = await fetch(`/profile/api/${params.id}`);
       const data = await response.json();
 
-      setProfile(data);
+      setProfileValues({
+        displayName: data.displayName,
+        userName: data.userName,
+      });
     };
 
     if (params.id) getProfile();
@@ -73,26 +72,22 @@ const EditProfile = ({ params }) => {
         onSubmit={updateProfile}
         enableReinitialize
       >
-        {({ initialValues, isSubmitting, resetForm, values }) => (
+        {({ isSubmitting, resetForm }) => (
           <section>
-            {console.log("Values", values)}
-            {console.log("InitialValues", initialValues)}
             <Form>
-              <button type="submit" onClick={updateProfile}>
-                Save
-              </button>
+              <button type="submit">Save</button>
               <MyTextInput
                 name="displayName"
                 type="text"
                 placeholder="Display name"
-                value={initialValues.displayName}
+                value={profileValues.displayName}
                 onChange={handleChange}
               />
               <MyTextInput
                 name="userName"
                 type="text"
                 placeholder="Username"
-                value={initialValues.userName}
+                value={profileValues.userName}
                 onChange={handleChange}
               />
             </Form>
