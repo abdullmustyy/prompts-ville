@@ -2,9 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { MyTextInput } from "@components/FormItems";
+import MyDropzone from "./MyDropzone";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const editProfileSchema = Yup.object().shape({
   userName: Yup.string()
@@ -29,6 +32,7 @@ const EditForm = ({ params, intercept }) => {
       setProfileValues({
         displayName: data.displayName,
         userName: data.userName,
+        image: data.image,
       });
     };
 
@@ -65,7 +69,10 @@ const EditForm = ({ params, intercept }) => {
   );
 
   return (
-    <section>
+    <section className="bg-white p-4 rounded-lg shadow-lg">
+      <div className="main">
+        <div className="gradient" />
+      </div>
       <Formik
         initialValues={profileValues}
         validationSchema={editProfileSchema}
@@ -74,8 +81,27 @@ const EditForm = ({ params, intercept }) => {
       >
         {({ isSubmitting, resetForm }) => (
           <section>
-            <Form>
-              <button type="submit">Save</button>
+            <Form className="space-y-4">
+              <div className="flex justify-between">
+                <div className="flex items-center gap-4">
+                  <FaArrowLeftLong
+                    onClick={() => (intercept ? back() : replace("/profile"))}
+                    className="cursor-pointer"
+                  />
+                  <span className="text-lg font-semibold">Edit profile</span>
+                </div>
+                <button type="submit" className="black_btn">
+                  Save
+                </button>
+              </div>
+              <Image
+                src={profileValues.image}
+                width={100}
+                height={100}
+                alt="User Image"
+                className="rounded-full"
+              />
+              <MyDropzone params={params} />
               <MyTextInput
                 name="displayName"
                 type="text"

@@ -4,15 +4,15 @@ const Home = () => {
   return (
     <section className="w-full flex flex-col">
       <h1 className="head_text text-center">
-        Dicover & Share
+        Discover & Share
         <br className="md:hidden" />
         <span className="orange_gradient text-center md:ml-3 ml-0">
           AI-Powered Prompts
         </span>
       </h1>
       <p className="desc text-center self-center">
-        Promptville is an AI prompting tool for modern world to
-        discover, create and share creative prompts
+        Promptville is an AI prompting tool for modern world to discover, create
+        and share creative prompts
       </p>
 
       <Feed />
