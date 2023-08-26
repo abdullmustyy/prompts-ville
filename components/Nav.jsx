@@ -52,16 +52,17 @@ const Nav = () => {
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
-            <Image
-              src={session?.user.image}
-              width={37}
-              height={37}
-              alt="profile"
-              className="rounded-full hover:cursor-pointer"
-              onClick={() => {
-                setToggleDropdown((prevToggle) => !prevToggle);
-              }}
-            />
+            <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
+              <Image
+                fill
+                src={session?.user.image}
+                alt="profile"
+                className="rounded-full hover:cursor-pointer"
+                onClick={() => {
+                  setToggleDropdown((prevToggle) => !prevToggle);
+                }}
+              />
+            </div>
 
             {toggleDropdown && (
               <div className="dropdown">

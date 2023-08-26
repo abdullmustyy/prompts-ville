@@ -94,14 +94,19 @@ const EditForm = ({ params, intercept }) => {
                   Save
                 </button>
               </div>
-              <Image
-                src={profileValues.image}
-                width={100}
-                height={100}
-                alt="User Image"
-                className="rounded-full"
-              />
-              <MyDropzone params={params} />
+              <div className="relative grid w-24 h-24">
+                <div className="absolute inset-0 bg-[#000] bg-opacity-40 rounded-full z-20"></div>
+                <Image
+                  fill
+                  src={profileValues.image}
+                  alt="User Image"
+                  className="rounded-full z-10"
+                />
+                <MyDropzone
+                  params={params}
+                  setProfileValues={setProfileValues}
+                />
+              </div>
               <MyTextInput
                 name="displayName"
                 type="text"

@@ -8,7 +8,10 @@ export const GET = async (request, { params }) => {
   try {
     await connectToDB();
 
-    const prompt = await Prompt.findById(params.id).populate("creator");
+    const prompt = await Prompt.findById(params.id).populate({
+      path: "creator",
+      select: "-password",
+    });
     if (!prompt) return new Response("Prompt Not Found", { status: 404 });
 
     return new Response(JSON.stringify(prompt), { status: 200 });
@@ -52,7 +55,10 @@ export const DELETE = async (request, { params }) => {
     await Prompt.deleteOne({ _id: params.id });
     const prompts = await Prompt.find({
       creator: new ObjectId(session?.user.id),
-    }).populate("creator");
+    }).populate({
+      path: "creator",
+      select: "-password",
+    });
 
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {

@@ -12,13 +12,12 @@ const Profile = ({ desc, data, handleEdit, handleDelete }) => {
   return (
     <section className="w-full">
       <div className="flex items-center gap-4">
-        <div className="outline outline-offset-2 rounded-full">
+        <div className="outline outline-offset-2 rounded-full w-20 h-20 relative">
           <Image
+            fill
             src={user?.image}
-            width={100}
-            height={100}
             alt="User Image"
-            className="rounded-full"
+            className="rounded-full object-cover"
           />
         </div>
         <div className="flex flex-col text-left">
