@@ -32,13 +32,14 @@ const Nav = () => {
               Sign Out
             </button>
             <Link href="/profile">
-              <Image
-                src={session?.user.image}
-                width={37}
-                height={37}
-                alt="profile"
-                className="rounded-full"
-              />
+              <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
+                <Image
+                  fill
+                  src={session?.user.image}
+                  alt="profile"
+                  className="rounded-full"
+                />
+              </div>
             </Link>
           </div>
         ) : (

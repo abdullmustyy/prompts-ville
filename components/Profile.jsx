@@ -17,7 +17,7 @@ const Profile = ({ desc, data, handleEdit, handleDelete }) => {
             fill
             src={user?.image}
             alt="User Image"
-            className="rounded-full object-cover"
+            className="rounded-full"
           />
         </div>
         <div className="flex flex-col text-left">

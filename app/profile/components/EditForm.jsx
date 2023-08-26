@@ -23,6 +23,7 @@ const editProfileSchema = Yup.object().shape({
 const EditForm = ({ params, intercept }) => {
   const [profileValues, setProfileValues] = useState({});
   const { replace, back } = useRouter();
+  const [file, setFile] = useState([]);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -45,8 +46,36 @@ const EditForm = ({ params, intercept }) => {
     setProfileValues((prev) => ({ ...prev, [name]: value }));
   }, []);
 
+  const uploadToCloudinary = useCallback(async () => {
+    if (!file?.length) return;
+
+    const formData = new FormData();
+    file.forEach((file) => formData.append("file", file));
+    formData.append("upload_preset", "promptsville");
+
+    const URL = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+    const data = await fetch(URL, {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+
+    const { secure_url } = data;
+    try {
+      const response = await fetch(`/profile/api/${params.id}/edit-photo`, {
+        method: "PATCH",
+        body: JSON.stringify({ image: secure_url }),
+      });
+
+      if (response.ok) console.log("Image updated successfully!");
+    } catch (error) {
+      console.log("Error updating image: ", error);
+    }
+  }, [file, params.id]);
+
   const updateProfile = useCallback(
     async (values) => {
+      await uploadToCloudinary();
+
       try {
         const response = await fetch(`/profile/api/${params.id}`, {
           method: "PATCH",
@@ -65,7 +94,7 @@ const EditForm = ({ params, intercept }) => {
         intercept ? back() : replace("/profile");
       }
     },
-    [back, intercept, params.id, replace]
+    [back, intercept, params.id, replace, uploadToCloudinary]
   );
 
   return (
@@ -103,7 +132,7 @@ const EditForm = ({ params, intercept }) => {
                   className="rounded-full z-10"
                 />
                 <MyDropzone
-                  params={params}
+                  setFile={setFile}
                   setProfileValues={setProfileValues}
                 />
               </div>
