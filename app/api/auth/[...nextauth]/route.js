@@ -1,8 +1,8 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { connectToDB } from "@utils/database";
-import User from "@models/user";
+import { connectToDB } from "@backend/utils/database";
+import User from "@backend/models/user";
 import bcrypt from "bcryptjs";
 
 export const authOptions = {

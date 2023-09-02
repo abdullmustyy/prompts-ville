@@ -1,5 +1,5 @@
-import User from "@models/user";
-import { connectToDB } from "@utils/database";
+import User from "@backend/models/user";
+import { connectToDB } from "@backend/utils/database";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (request, { params }) => {

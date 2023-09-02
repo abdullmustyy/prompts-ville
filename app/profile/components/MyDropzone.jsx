@@ -18,12 +18,13 @@ const MyDropzone = ({ setFile, setProfileValues }) => {
     },
     [setFile, setProfileValues]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/*": [],
     },
-    maxFiles: 1,
+    multiple: false,
+    noDrag: true,
   });
 
   return (

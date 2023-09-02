@@ -22,7 +22,7 @@ const editProfileSchema = Yup.object().shape({
 
 const EditForm = ({ params, intercept }) => {
   const [profileValues, setProfileValues] = useState({});
-  const { replace, back } = useRouter();
+  const { replace, back, refresh } = useRouter();
   const [file, setFile] = useState([]);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const EditForm = ({ params, intercept }) => {
     setProfileValues((prev) => ({ ...prev, [name]: value }));
   }, []);
 
-  const uploadToCloudinary = useCallback(async () => {
+ const uploadToCloudinary = useCallback(async () => {
     if (!file?.length) return;
 
     const formData = new FormData();
@@ -92,9 +92,11 @@ const EditForm = ({ params, intercept }) => {
       } catch (error) {
         alert("Something went wrong!");
         intercept ? back() : replace("/profile");
+      } finally {
+        refresh();
       }
     },
-    [back, intercept, params.id, replace, uploadToCloudinary]
+    [back, intercept, params.id, refresh, replace, uploadToCloudinary]
   );
 
   return (
@@ -119,14 +121,19 @@ const EditForm = ({ params, intercept }) => {
                   />
                   <span className="text-lg font-semibold">Edit profile</span>
                 </div>
-                <button type="submit" className="black_btn">
-                  Save
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="black_btn disable"
+                >
+                  {isSubmitting ? "Saving" : "Save"}
                 </button>
               </div>
               <div className="relative grid w-24 h-24">
                 <div className="absolute inset-0 bg-[#000] bg-opacity-40 rounded-full z-20"></div>
                 <Image
                   fill
+                  sizes="100%"
                   src={profileValues.image}
                   alt="User Image"
                   className="rounded-full z-10"

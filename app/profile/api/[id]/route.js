@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import User from "@models/user";
-import { connectToDB } from "@utils/database";
+import User from "@backend/models/user";
+import { connectToDB } from "@backend/utils/database";
 
 export const GET = async (request, { params }) => {
   try {

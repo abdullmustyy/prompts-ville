@@ -1,5 +1,5 @@
-import Prompt from "@models/prompt";
-import { connectToDB } from "@utils/database";
+import Prompt from "@backend/models/prompt";
+import { connectToDB } from "@backend/utils/database";
 import { ObjectId } from "mongodb";
 import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";

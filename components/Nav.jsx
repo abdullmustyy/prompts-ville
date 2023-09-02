@@ -35,6 +35,7 @@ const Nav = () => {
               <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
                 <Image
                   fill
+                  sizes="100%"
                   src={session?.user.image}
                   alt="profile"
                   className="rounded-full"
@@ -56,6 +57,7 @@ const Nav = () => {
             <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
               <Image
                 fill
+                sizes="100%"
                 src={session?.user.image}
                 alt="profile"
                 className="rounded-full hover:cursor-pointer"

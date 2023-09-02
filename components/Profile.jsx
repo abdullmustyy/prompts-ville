@@ -15,6 +15,7 @@ const Profile = ({ desc, data, handleEdit, handleDelete }) => {
         <div className="outline outline-offset-2 rounded-full w-20 h-20 relative">
           <Image
             fill
+            sizes="100%"
             src={user?.image}
             alt="User Image"
             className="rounded-full"
