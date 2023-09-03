@@ -1,12 +1,28 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [userImage, setUserImage] = useState("");
+
+  const getUserImage = useCallback(async () => {
+    try {
+      const reponse = await fetch(`profile/api/${session?.user?.id}`);
+      const data = await reponse.json();
+
+      setUserImage(data.image);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [session?.user?.id]);
+
+  if (session?.user?.id) {
+    getUserImage();
+  }
 
   return (
     <nav className="flex-between w-full mb-16 p-3">
@@ -36,7 +52,7 @@ const Nav = () => {
                 <Image
                   fill
                   sizes="100%"
-                  src={session?.user.image}
+                  src={userImage || session?.user.image}
                   alt="profile"
                   className="rounded-full"
                 />
@@ -58,7 +74,7 @@ const Nav = () => {
               <Image
                 fill
                 sizes="100%"
-                src={session?.user.image}
+                src={userImage || session?.user.image}
                 alt="profile"
                 className="rounded-full hover:cursor-pointer"
                 onClick={() => {
