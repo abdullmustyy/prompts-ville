@@ -1,13 +1,14 @@
 import "@styles/globals.css";
 import Provider from "@components/Provider";
 import LayoutProvider from "@components/LayoutProvider";
+import CreatePromptButton from "@components/CreatePromptButton";
 
 export const metadata = {
   title: "PromptsVille",
   description: "Discover and Share AI Prompts",
 };
 
-const RootLayout = ({ children }) => {
+const RootLayout = ({ children, create }) => {
   return (
     <html lang="en">
       <body className="select-none">
@@ -16,7 +17,11 @@ const RootLayout = ({ children }) => {
             <div className="gradient" />
           </div>
           <LayoutProvider>
-            <main className="app">{children}</main>
+            <main className="app">
+              {children}
+              {/* {create} */}
+            <CreatePromptButton />
+            </main>
           </LayoutProvider>
         </Provider>
       </body>
