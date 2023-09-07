@@ -118,7 +118,7 @@ hr {
 }
 
 .copy_btn {
-  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+  @apply w-7 h-7 rounded-full bg-[#dce6ff]/10 group-hover:bg-[#dce6ff]/80 hover:bg-[#dce6ff]/100 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer transition-all;
 }
 
 .glassmorphism {

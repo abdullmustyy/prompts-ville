@@ -25,7 +25,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   };
 
   return (
-    <div className="prompt_card">
+    <div className="prompt_card group">
       <div className="flex justify-between items-start gap-5">
         <div
           className="flex justify-start items-center gap-3 cursor-pointer"
@@ -66,12 +66,12 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
       </div>
 
       <p className="my-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
-      <p
-        className="font-inter text-sm blue_gradient cursor-pointer"
+      <div
         onClick={() => handleTagClick && handleTagClick(post.tag)}
+        className="bg-[#dce6ff]/50 hover:bg-[#dce6ff] p-1 w-fit rounded-md cursor-pointer transition-all"
       >
-        #{post.tag}
-      </p>
+        <p className="font-inter text-sm blue_gradient">{post.tag}</p>
+      </div>
 
       {session?.user.id === post.creator._id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
