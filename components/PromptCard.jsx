@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { FaSquarePen, FaTrash } from "react-icons/fa6";
 
 const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const { data: session } = useSession();
@@ -74,19 +75,15 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
       </div>
 
       {session?.user.id === post.creator._id && pathName === "/profile" && (
-        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
-          <p
-            className="font-inter text-sm green_gradient cursor-pointer"
+        <div className="mt-5 flex-end gap-4 border-t border-gray-100 pt-3">
+          <FaSquarePen
             onClick={handleEdit}
-          >
-            Edit
-          </p>
-          <p
-            className="font-inter text-sm orange_gradient cursor-pointer"
+            className="cursor-pointer text-[1.3rem] text-green-500/70 hover:text-green-500 transition-all"
+          />
+          <FaTrash
             onClick={handleDelete}
-          >
-            Delete
-          </p>
+            className="cursor-pointer text-[1.3rem] text-primary-orange/70 hover:text-primary-orange transition-all"
+          />
         </div>
       )}
     </div>
