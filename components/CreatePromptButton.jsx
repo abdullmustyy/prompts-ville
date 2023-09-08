@@ -13,7 +13,7 @@ const CreatePromptButton = () => {
     <div>
       {session?.user?.id && pathname !== "/create-prompt" && (
         <Link href="/create-prompt">
-          <FaCirclePlus className="fixed right-4 bottom-4 md:text-5xl text-[2.5rem] text-primary-orange" />
+          <FaCirclePlus className="fixed right-4 bottom-4 md:text-5xl text-[2.5rem] text-primary-orange/70 hover:text-primary-orange transition-all" />
         </Link>
       )}
     </div>

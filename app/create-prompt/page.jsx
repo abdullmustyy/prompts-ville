@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Form from "@components/Form";
 
 const CreatePrompt = () => {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { data: session } = useSession();
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: "", tag: "" });
@@ -26,7 +26,7 @@ const CreatePrompt = () => {
       });
 
       if (response.ok) {
-        push("/");
+        replace("/profile");
       }
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ const CreatePrompt = () => {
 
   return (
     <Form
-      type="Create"
+      type={submitting ? "Creat" : "Create"}
       post={post}
       setPost={setPost}
       submitting={submitting}
