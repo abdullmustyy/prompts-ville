@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -11,11 +11,13 @@ const CreatePromptButton = () => {
 
   return (
     <div>
-      {session?.user?.id && pathname !== "/create-prompt" && (
-        <Link href="/create-prompt">
-          <FaCirclePlus className="fixed right-4 bottom-4 md:text-5xl text-[2.5rem] text-primary-orange/70 hover:text-primary-orange transition-all" />
-        </Link>
-      )}
+      {session?.user?.id &&
+        pathname !== "/create-prompt" &&
+        pathname !== "/update-prompt" && (
+          <Link href="/create-prompt">
+            <FaCirclePlus className="fixed right-4 bottom-4 md:text-5xl text-[2.5rem] text-primary-orange/70 hover:text-primary-orange transition-all" />
+          </Link>
+        )}
     </div>
   );
 };
