@@ -73,8 +73,8 @@ const Feed = () => {
 
   return (
     <section className="feed">
-      <form className="relative w-full flex-center">
-        <div className="w-full relative">
+      <form className="w-full flex-center sticky top-2">
+        <div className="flex items-center w-full relative">
           <input
             type="text"
             placeholder="Search for a tag or a username"
@@ -83,15 +83,15 @@ const Feed = () => {
             required
             className="search_input peer"
           />
+          <FaCircleXmark
+            onClick={() => setSearchText("")}
+            className={
+              searchText
+                ? "text-primary-orange/70 hover:text-primary-orange text-xl cursor-pointer absolute right-3"
+                : "hidden"
+            }
+          />
         </div>
-        <FaCircleXmark
-          onClick={() => setSearchText("")}
-          className={
-            searchText
-              ? "text-primary-orange absolute end-2 cursor-pointer"
-              : "hidden"
-          }
-        />
       </form>
 
       {/* All Prompts */}

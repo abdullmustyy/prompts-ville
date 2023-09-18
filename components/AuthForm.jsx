@@ -154,7 +154,7 @@ const AuthForm = () => {
   };
 
   return (
-    <section className="absolute w-screen h-screen left-0 top-0 flex flex-col justify-center items-center gap-6">
+    <section className="w-screen flex flex-col justify-center items-center gap-6">
       <h1 className="font-satoshi font-semibold text-xl text-black tracking-wide">
         {isSignIn ? "Sign" : "Sign"}{" "}
         <span className="orange_gradient">{isSignIn ? "In" : "Up"}</span>
@@ -165,7 +165,7 @@ const AuthForm = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, resetForm }) => (
-          <section className="lg:w-[50%] md:w-[70%] w-full md:px-0 px-6 grid gap-4">
+          <section className="lg:w-[50%] md:w-[70%] w-full h-96 md:px-0 px-6 grid gap-4 overflow-y-auto">
             <Form className="grid gap-4">
               {isSignUp && (
                 <>
@@ -202,7 +202,7 @@ const AuthForm = () => {
                 type="submit"
                 disabled={isSubmitting}
                 onClick={() => setError(null)}
-                className="px-5 py-1.5 text-base font-bold bg-primary-orange rounded-full text-white disable"
+                className="px-5 py-1.5 text-base font-bold bg-primary-orange/70 hover:bg-primary-orange rounded-full text-white disable transition-all"
               >
                 {isSubmitting ? "Signing" : "Sign"} {isSignIn ? "In" : "Up"}
               </button>

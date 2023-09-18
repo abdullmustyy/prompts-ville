@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -8,6 +9,7 @@ const Nav = () => {
   const { data: session } = useSession();
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [userImage, setUserImage] = useState("");
+  const pathname = usePathname();
 
   const getUserImage = useCallback(async () => {
     try {
@@ -57,9 +59,11 @@ const Nav = () => {
             </Link>
           </div>
         ) : (
-          <Link href="/auth" className="black_btn">
-            Sign In
-          </Link>
+          pathname !== "/auth" && (
+            <Link href="/auth" className="black_btn">
+              Sign In
+            </Link>
+          )
         )}
       </div>
 
@@ -103,9 +107,11 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          <Link href="/auth" className="black_btn">
-            Sign In
-          </Link>
+          pathname !== "/auth" && (
+            <Link href="/auth" className="black_btn">
+              Sign In
+            </Link>
+          )
         )}
       </div>
     </nav>
