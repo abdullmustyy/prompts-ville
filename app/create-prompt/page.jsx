@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Form from "@components/Form";
 
 const CreatePrompt = () => {
-  console.log("Im here");
   const { replace } = useRouter();
   const { data: session } = useSession();
   const [submitting, setIsSubmitting] = useState(false);
