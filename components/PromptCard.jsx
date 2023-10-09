@@ -26,7 +26,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   };
 
   return (
-    <div className="prompt_card group sticky top-2">
+    <div className="prompt_card group">
       <div className="flex justify-between items-start gap-5">
         <div
           className="flex justify-start items-center gap-3 cursor-pointer"
@@ -34,11 +34,11 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         >
           <div className="relative w-10 h-10 rounded-full outline outline-offset-1">
             <Image
-              fill
-              sizes="100%"
+              width={40}
+              height={40}
               src={post.creator.image}
               alt="user_image"
-              className="rounded-full"
+              className="rounded-full object-fill w-10 h-10"
             />
           </div>
 

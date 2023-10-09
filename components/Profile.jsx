@@ -14,11 +14,11 @@ const Profile = ({ desc, data, handleEdit, handleDelete }) => {
       <div className="flex items-center gap-4">
         <div className="outline outline-offset-2 rounded-full w-20 h-20 relative">
           <Image
-            fill
-            sizes="100%"
+            width={80}
+            height={80}
             src={user?.image}
             alt="User Image"
-            className="rounded-full"
+            className="rounded-full object-fill w-20 h-20"
           />
         </div>
         <div className="flex flex-col text-left">

@@ -49,11 +49,11 @@ const Nav = () => {
             <Link href="/profile">
               <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
                 <Image
-                  fill
-                  sizes="100%"
+                  width={32}
+                  height={32}
                   src={userImage || session?.user.image}
                   alt="profile"
-                  className="rounded-full"
+                  className="rounded-full object-fill w-8 h-8"
                 />
               </div>
             </Link>
@@ -73,11 +73,11 @@ const Nav = () => {
           <div className="flex">
             <div className="relative w-8 h-8 rounded-full outline outline-offset-1">
               <Image
-                fill
-                sizes="100%"
+                width={32}
+                height={32}
                 src={userImage || session?.user.image}
                 alt="profile"
-                className="rounded-full hover:cursor-pointer"
+                className="rounded-full hover:cursor-pointer object-fill w-8 h-8"
                 onClick={() => {
                   setToggleDropdown((prevToggle) => !prevToggle);
                 }}

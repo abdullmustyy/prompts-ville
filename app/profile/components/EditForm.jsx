@@ -130,11 +130,11 @@ const EditForm = ({ params, intercept }) => {
               <div className="relative grid w-24 h-24">
                 <div className="absolute inset-0 bg-[#000] bg-opacity-40 rounded-full z-20"></div>
                 <Image
-                  fill
-                  sizes="100%"
+                  width={96}
+                  height={96}
                   src={profileValues.image}
                   alt="User Image"
-                  className="rounded-full z-10"
+                  className="rounded-full z-10 object-fill w-24 h-24"
                 />
                 <MyDropzone
                   setFile={setFile}

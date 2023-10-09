@@ -73,7 +73,7 @@ const Feed = () => {
 
   return (
     <section className="feed">
-      <form className="w-full flex-center sticky top-2">
+      <form className="w-full flex-center sticky top-2 z-10">
         <div className="flex items-center w-full relative">
           <input
             type="text"

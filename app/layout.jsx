@@ -8,7 +8,7 @@ export const metadata = {
   description: "Discover and Share AI Prompts",
 };
 
-const RootLayout = ({ children, modal }) => {
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body className="select-none">
@@ -19,7 +19,6 @@ const RootLayout = ({ children, modal }) => {
           <Nav />
           <main className="app">
             {children}
-            {modal}
             <CreatePromptButton />
           </main>
         </Provider>
