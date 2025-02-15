@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import User from "@backend/models/user";
 import { connectToDB } from "@backend/utils/database";
 
-export const GET = async (request, { params }) => {
+export const GET = async (request, props) => {
+  const params = await props.params;
   try {
     await connectToDB();
 
@@ -20,7 +21,8 @@ export const GET = async (request, { params }) => {
   }
 };
 
-export const PATCH = async (request, { params }) => {
+export const PATCH = async (request, props) => {
+  const params = await props.params;
   const { displayName, userName } = await request.json();
 
   try {

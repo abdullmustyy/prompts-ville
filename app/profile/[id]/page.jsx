@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Profile from "@components/Profile";
 
-const UserProfile = ({ params }) => {
+const UserProfile = props => {
+  const params = use(props.params);
   const { data: session } = useSession();
   const { replace } = useRouter();
 

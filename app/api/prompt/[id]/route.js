@@ -4,7 +4,8 @@ import { ObjectId } from "mongodb";
 import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
-export const GET = async (request, { params }) => {
+export const GET = async (request, props) => {
+  const params = await props.params;
   try {
     await connectToDB();
 
@@ -20,7 +21,8 @@ export const GET = async (request, { params }) => {
   }
 };
 
-export const PATCH = async (request, { params }) => {
+export const PATCH = async (request, props) => {
+  const params = await props.params;
   const { prompt, tag } = await request.json();
 
   try {
@@ -45,7 +47,8 @@ export const PATCH = async (request, { params }) => {
   }
 };
 
-export const DELETE = async (request, { params }) => {
+export const DELETE = async (request, props) => {
+  const params = await props.params;
   const session = await getServerSession(authOptions);
 
   try {

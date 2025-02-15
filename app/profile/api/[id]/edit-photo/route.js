@@ -2,7 +2,8 @@ import User from "@backend/models/user";
 import { connectToDB } from "@backend/utils/database";
 import { NextResponse } from "next/server";
 
-export const PATCH = async (request, { params }) => {
+export const PATCH = async (request, props) => {
+  const params = await props.params;
   const { image } = await request.json();
 
   try {

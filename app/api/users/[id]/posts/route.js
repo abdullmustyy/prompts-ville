@@ -1,7 +1,8 @@
 import Prompt from "@backend/models/prompt";
 import { connectToDB } from "@backend/utils/database";
 
-export const GET = async (request, { params }) => {
+export const GET = async (request, props) => {
+  const params = await props.params;
   try {
     await connectToDB();
 
