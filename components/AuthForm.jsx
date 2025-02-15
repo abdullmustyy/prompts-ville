@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getProviders, signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { MyTextInput } from "@components/FormItems";
+import { Form, Formik } from "formik";
+import { getProviders, signIn } from "next-auth/react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FaCircleExclamation } from "react-icons/fa6";
+import * as Yup from "yup";
 
 const signInSchema = Yup.object().shape({
   email: Yup.string()
@@ -61,8 +61,8 @@ const AuthForm = () => {
   const [error, setError] = useState(null);
   const [pageType, setPageType] = useState("signin");
 
-  const { get } = useSearchParams();
-  const callbackUrl = get("callbackUrl");
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const { replace } = useRouter();
 
   useEffect(() => {

@@ -8,7 +8,8 @@ export { default } from "next-auth/middleware";
 //     const token = await getToken({ req });
 //     const authUrl = new URL("/auth", req.url);
 
-//     authUrl.searchParams.set("from", req.nextUrl.pathname + req.nextUrl.search);
+//     authUrl.searchParams.set("from", req.nextUrl.pathname + req.nextUrl.sea
+// rch);
 
 //     if (!token) return NextResponse.redirect(authUrl);
 //   },
