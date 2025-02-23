@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import { FaCircleXmark } from "react-icons/fa6";
+import { useRouter } from 'next/navigation'
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -23,6 +24,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [allPosts, setAllPosts] = useState([]);
+  const router = useRouter();
 
   // Search states
   const [searchText, setSearchText] = useState("");
@@ -35,6 +37,7 @@ const Feed = () => {
       const data = await response.json();
 
       setAllPosts(data);
+      router.refresh();
     };
 
     fetchPosts();
